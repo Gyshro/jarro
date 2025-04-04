@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jarro de Corações</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #f8bbd0, #fce4ec);
+      font-family: "Arial", sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #d81b60;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .jar-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .jar {
+      width: 220px;
+      height: 320px;
+      background: #fff;
+      border: 5px solid #d81b60;
+      border-radius: 50px 50px 20px 20px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .ribbon {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 40px;
+      background: #d81b60;
+      border-radius: 10px 10px 50% 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .ribbon::before,
+    .ribbon::after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      width: 40px;
+      height: 20px;
+      background: #d81b60;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    .ribbon::before {
+      left: -40px;
+    }
+
+    .ribbon::after {
+      right: -40px;
+      transform: scaleX(-1);
+    }
+
+    .heart {
+      width: 30px;
+      height: 30px;
+      background: red;
+      position: absolute;
+      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 75%, 20% 100%, 0% 35%);
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .heart:hover {
+      transform: scale(1.2);
+    }
+
+    .message-box {
+      background: white;
+      border: 3px solid #d81b60;
+      border-radius: 12px;
+      padding: 20px;
+      width: 300px;
+      min-height: 200px;
+      text-align: left;
+      font-size: 16px;
+      color: #444;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+
+    .placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .jar {
+        width: 180px;
+        height: 280px;
+      }
+
+      .heart {
+        width: 25px;
+        height: 25px;
+      }
+
+      .ribbon {
+        width: 70px;
+        height: 35px;
+      }
+
+      .message-box {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Jarro do Amor 💖</h1>
+  <div class="content">
+    <div class="jar-container">
+      <div class="ribbon"></div>
+      <div class="jar" id="jar"></div>
+    </div>
+    <div class="message-box" id="messageBox">
+      <div class="placeholder">Clique em um coração para ver a mensagem 💌</div>
+    </div>
+  </div>
+
+  <script>
+    const jar = document.getElementById("jar");
+    const messageBox = document.getElementById("messageBox");
+
+    const messages = [
+      "Hoje o mundo te irritou em todas as línguas, tons e gestos... mas você, mesmo assim, permaneceu firme — como quem carrega um castelo inteiro por dentro Hoje o mundo te irritou em todas as línguas, tons e gestos... mas você, mesmo assim, permaneceu firme — como quem carrega um castelo inteiro por dentro ", "Te adoro!", "Seu sorriso ilumina meu dia!", "Você é especial!",
+      "Meu coração bate mais forte por você!", "Sempre penso em você!", "Você me faz feliz!", "Te quero bem!",
+      "Cada momento com você é único!", "Você é um sonho realizado!", "Com você, tudo é melhor!", "Meu carinho por você é imenso!",
+      "Seus olhos brilham como estrelas!", "Você é minha inspiração!", "Nada é igual sem você!", "Você é puro encanto!"
+    ];
+
+    const positions = [
+      [20, 80], [40, 75], [60, 70], [80, 65],
+      [15, 60], [35, 55], [55, 50], [75, 45],
+      [25, 40], [45, 35], [65, 30], [85, 25],
+      [30, 20], [50, 15], [70, 10], [90, 5]
+    ];
+
+    for (let i = 0; i < 16; i++) {
+      let heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = positions[i][0] + "%";
+      heart.style.top = positions[i][1] + "%";
+      heart.addEventListener("click", () => {
+        messageBox.innerHTML = `<p>${messages[i]}</p>`;
+      });
+      jar.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
